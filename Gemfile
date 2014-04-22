@@ -7,6 +7,11 @@ gem 'rails', '4.1.0'
 gem 'bootstrap-sass', '3.1.1.0'
 gem 'sprockets', '2.11.0'
 
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+
+gem 'faker', '1.1.2', group: :development
+
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 
