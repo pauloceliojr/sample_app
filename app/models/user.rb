@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :microposts, dependent: :destroy
 
 =begin - Sobrescrita de attr_accessor :email do método setter
   def email=(valor)
@@ -17,7 +18,7 @@ class User < ActiveRecord::Base
   before_save { self.email = email.downcase }
 
   # É executado após before_save, apenas para operação de INSERT.
-  # Aqui foi passado a referência para um método em vez de um bloco, o que é preferível no Rails.
+  # Aqui foi passado a referência para um méthodo em vez de um bloco, o que é preferível no Rails.
   before_create :create_remember_token
 
   validates :name, presence: true, length: { maximum: 50 }

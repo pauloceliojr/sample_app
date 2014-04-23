@@ -23,8 +23,10 @@
         <% end %>
 
         <% if edit_mode %>
-          <%= gravatar_for @user %>
-          <%= link_to "change", "http://gravatar.com/emails", target: "_blank" %>
+          <div id="gravatar">
+              <%= gravatar_for @user %>
+              <%= link_to "change", "http://gravatar.com/emails", target: "_blank" %>
+          </div>
         <% end %>
     </div>
 </div>
