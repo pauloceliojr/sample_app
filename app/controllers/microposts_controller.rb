@@ -1,30 +1,33 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user
-  before_action :current_user, only: [:create, :destroy]
+  before_action :correct_user, only: :destroy
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = 'Micropost created!'
       redirect_to root_url
     else
+      @feed_items = []
       render 'static_pages/home'
     end
   end
   
   def destroy
+    @micropost.destroy
+    redirect_to root_url
   end
 
   private
 
-  def micropost_params
-    params.require(:micropost).permit(:content)
-  end
+    def micropost_params
+      params.require(:micropost).permit(:content)
+    end
 
-  def correct_user
-      @user = User.find(params[:id])
-      unless current_user?(@user)
-        flash[:error] = "Usuário não tem permissão para executar essa ação."
+    def correct_user
+      @micropost = current_user.microposts.find(params[:id])
+      if @micropost.nil?
+        flash[:error] = 'Usuário não tem permissão para executar essa ação.'
         redirect_to root_url
       end
     end
