@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s) # to_s inserido para garantir que um token nil seja aceito em caso de algum erro.
   end
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   private
 
     def create_remember_token

@@ -1,16 +1,35 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    puts 'Iniciando tarefa.'
+    medir_tempo("Popular usuarios predefinidos") { popular_usuarios_predefinidos }
+    medir_tempo("Popular outros usuarios") { popular_outros_usuarios }
+    medir_tempo("Popular microposts") { popular_microposts }
+    puts 'Tarefa finalizada com sucesso.'
+  end
+
+  def popular_usuarios_predefinidos
+    puts '-- Criando user Paulo Celio Junior.'
+    start = Time.now
     User.create!(name: "Paulo Célio Júnior",
                  email: "pauloceliojr@gmail.com",
                  password: "123456",
                  password_confirmation: "123456",
                  admin: true)
+    puts '-- User Paulo Celio Junior criado.'
+
+    puts '-- Criando user Example User.'
     User.create!(name: "Example User",
                  email: "example@railstutorial.org",
                  password: "123456",
                  password_confirmation: "123456",
                  admin: true)
+    puts '-- User Example User criado.'
+
+  end
+
+  def popular_outros_usuarios
+    puts '-- Criando outros usuarios.'
     99.times do |n|
       name  = Faker::Name.name
       email = "example-#{n+1}@railstutorial.org"
@@ -20,11 +39,22 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+    puts '-- Outros usuarios criados.'
+  end
 
+  def popular_microposts
+    puts '-- Criando microposts.'
     users = User.limit(7)
     50.times do
       content = Faker::Lorem.sentence(5)
       users.each { |user| user.microposts.create!(content: content) }
     end
+    puts '-- Microposts.'
+  end
+
+  def medir_tempo(nome_etapa="Nao identificada")
+    inicio = Time.now
+    yield
+    puts "- Etapa '#{nome_etapa}' completada em #{Time.now - inicio} segundos."
   end
 end
