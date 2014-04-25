@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = 'Welcome to the Sample App!'
       redirect_to @user
     else
       render 'new'
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated."
+      flash[:success] = 'Profile updated.'
       redirect_to @user
     else
       render 'edit'
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted."
+    flash[:success] = 'User deleted.'
     redirect_to users_url
   end
 
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 
     def new_user
       if signed_in?
-        flash[:error] = "Acesso permitido apenas para novos usuários."
+        flash[:error] = 'Acesso permitido apenas para novos usuários.'
         redirect_to root_url
       end
     end
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       unless current_user?(@user)
-        flash[:error] = "Usuário não tem permissão para executar essa ação."
+        flash[:error] = 'Usuário não tem permissão para executar essa ação.'
         redirect_to root_url
       end
     end
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     def admin_user
       user = User.find(params[:id])
       unless current_user.admin? && !current_user?(user)
-        flash[:error] = "Usuário não tem permissão para executar essa ação."
+        flash[:error] = 'Usuário não tem permissão para executar essa ação.'
         redirect_to root_url
       end
     end
