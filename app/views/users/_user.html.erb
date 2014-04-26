@@ -1,9 +1,19 @@
-<tr>
-  <td><%= gravatar_for user, size: 30 %></td>
-  <td><%= link_to user.name, user %></td>
-  <% if current_user.admin? && !current_user?(user) %>
-    <td><%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?" } %></td>
-  <% else %>
-    <td></td>
-  <% end %>
-</tr>
+<% if list_mode ||= false %>
+    <li>
+      <%= gravatar_for user, size: 52 %>
+      <%= link_to user.name, user %>
+      <% if current_user.admin? %>
+          <%= link_to '| Delete', user, method: :delete, data: { confirm: 'You sure?' } %>
+      <% end %>
+    </li>
+<% else %>
+    <tr>
+      <td><%= gravatar_for user, size: 30 %></td>
+      <td><%= link_to user.name, user %></td>
+      <% if current_user.admin? && !current_user?(user) %>
+          <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'You sure?' } %></td>
+      <% else %>
+          <td></td>
+      <% end %>
+    </tr>
+<% end %>
