@@ -4,5 +4,5 @@
           # Nesse caso é necessária a chave 'partial:' porque é requisito para funcionamento da chave 'collection:'.
       <% end %>
     </ol>
-    <%= will_paginate @feed_items %>
+    <%= will_paginate @feed_items, inner_window: 2 %>
 <% end %>
